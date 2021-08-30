@@ -8,6 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StepperComponent } from './home/stepper/stepper.component';
+import { GridComponent } from './home/grid/grid.component';
 
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +19,9 @@ import {MatRadioModule} from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select'
 import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 
 @NgModule({
@@ -26,7 +30,8 @@ import {MatButtonModule} from '@angular/material/button';
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    StepperComponent
+    StepperComponent,
+    GridComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatRadioModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    FlexLayoutModule,
+    MatCardModule
   ],
   exports: [
     MatStepperModule,

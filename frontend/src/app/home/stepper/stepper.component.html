@@ -5,9 +5,9 @@
         <ng-template matStepLabel>Select Index</ng-template>
         <mat-form-field appearance="fill">
             <mat-label>Index</mat-label>
-            <mat-select matInput formControlName="firstCtrl">
-              <mat-option  *ngFor="let index of indices" [value]="index.value">
-                {{index.viewValue}}
+            <mat-select matInput formControlName="firstCtrl" [(ngModel)]="this.index">
+              <mat-option  *ngFor="let ind of indices" value = {{ind.value}}>
+                {{ind.viewValue}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -21,7 +21,7 @@
         <ng-template matStepLabel>Select forecasting period</ng-template>
         <mat-form-field appearance="fill">
             <mat-label>Periods</mat-label>
-            <mat-select matInput formControlName="secondCtrl">
+            <mat-select matInput formControlName="secondCtrl" [(ngModel)]="this.period">
                 <mat-option  [value]=5>5</mat-option>
                 <mat-option  [value]=14>14</mat-option>
                 <mat-option  [value]=28>28</mat-option>
@@ -34,12 +34,13 @@
       </form>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are now done.</p>
+      <ng-template matStepLabel>Confirm</ng-template>
+      <p>The prediction might take a while, please be patient.</p>
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
-        {{this.secondFormGroup.get('secondCtrl')}} {{firstFormGroup.get('firstCtrl')}}
+        <button mat-button (click)="redirect()">Confirm</button>
+        {{this.index}} {{this.period}}
       </div>
     </mat-step>
   </mat-stepper>

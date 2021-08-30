@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
 import { FormBuilder } from "@angular/forms";
 import { Validators } from "@angular/forms";
+
 interface Index{
   value: string;
   viewValue: string;
@@ -15,6 +16,8 @@ interface Index{
 export class StepperComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  index : any;
+  period: any;
   isEditable = false;
   indices: Index[] = [ 
     {value: "DJIA", viewValue:"Dow Jones"},
@@ -27,8 +30,9 @@ export class StepperComponent implements OnInit {
     {value: "LFG9", viewValue:"Russel 2000"},
     {value: "ESTX", viewValue:"EuroStoxx 50"}
   ];
-  constructor(private _formBuilder: FormBuilder) {}
 
+  constructor(private _formBuilder: FormBuilder) {}
+  @Output() OnInputsPicked = new EventEmitter();
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
@@ -37,4 +41,10 @@ export class StepperComponent implements OnInit {
       secondCtrl: ['', Validators.required]
     });
   }
+  redirect() {
+    let userinputs : Array<any>;
+    userinputs = [this.index,this.period];
+    this.OnInputsPicked.emit(userinputs);
+  }
+
 }

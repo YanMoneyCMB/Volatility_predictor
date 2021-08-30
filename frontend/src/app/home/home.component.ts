@@ -7,10 +7,16 @@ import { StepperComponent } from './stepper/stepper.component';
 
 })
 export class HomeComponent implements OnInit {
+  showInput: boolean = true;
+  showPredictions: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  displayPredictions(inputs: any) : void{
+    this.showPredictions = true;
+    this.showInput = false;
+    
+  }
 }
