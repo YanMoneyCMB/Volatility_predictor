@@ -1,0 +1,45 @@
+
+<mat-stepper linear #stepper>
+    <mat-step [stepControl]="firstFormGroup" >
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Select Index</ng-template>
+        <mat-form-field appearance="fill">
+            <mat-label>Index</mat-label>
+            <mat-select matInput formControlName="firstCtrl">
+              <mat-option  *ngFor="let index of indices" [value]="index.value">
+                {{index.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Select forecasting period</ng-template>
+        <mat-form-field appearance="fill">
+            <mat-label>Periods</mat-label>
+            <mat-select matInput formControlName="secondCtrl">
+                <mat-option  [value]=5>5</mat-option>
+                <mat-option  [value]=14>14</mat-option>
+                <mat-option  [value]=28>28</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+        {{this.secondFormGroup.get('secondCtrl')}} {{firstFormGroup.get('firstCtrl')}}
+      </div>
+    </mat-step>
+  </mat-stepper>
