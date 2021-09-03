@@ -24,11 +24,10 @@ export class StepperComponent implements OnInit {
     {value: "SPX", viewValue:"S&P 500"},
     {value: "IXIC", viewValue:"Nasdaq"},
     {value: "XAX", viewValue:"NYSE"},
-    {value: "UKX", viewValue:"FTSE 100"},
     {value: "DAX", viewValue:"DAX"},
     {value: "NIK2", viewValue:"Nikkei 225"},
-    {value: "LFG9", viewValue:"Russel 2000"},
-    {value: "ESTX", viewValue:"EuroStoxx 50"}
+    {value: "RUT", viewValue:"Russel 2000"},
+    {value: "LFG9", viewValue:"DJ Shanghai Index"}
   ];
 
   constructor(private _formBuilder: FormBuilder) {}

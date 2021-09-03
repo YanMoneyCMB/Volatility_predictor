@@ -3,7 +3,7 @@
         <div class="container">
             
             <app-stepper *ngIf="showInput" (OnInputsPicked) = "displayPredictions($event)"></app-stepper>
-            <app-grid *ngIf="showPredictions"></app-grid>
+            <app-grid *ngIf="showPredictions" [index]=index [period]=period [prediction]=prediction></app-grid>
         </div>
     </div>
 </section>

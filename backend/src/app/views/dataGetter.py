@@ -2,10 +2,28 @@ import pandas as pd
 import numpy as np
 import yfinance as yf
 import math
+from datetime import datetime,timedelta
+
+def getOptions(index,period):
+    tick = yf.Ticker(index)
+    date = datetime.today()
+    options = False
+    counter = 0
+
+    while (options == False) or counter<8:
+        date = date+timedelta(days=counter)
+        try:
+            options =tick.option_chain((date+timedelta(days=period)).strftime('%Y-%m-%d'))
+        except:
+            pass
+        counter = counter + 1
+    return options,date.strftime('%Y-%m-%d')
+
+
 
 def chartData(index, period, prediction):
     tick = yf.Ticker(index)
-    data = tick.history(period=str(period)+'d').Close
+    data = tick.history(period='14d').Close
     last_price = data.tail(1).values[0]
     maximum = last_price * (1+2*prediction)
     minimum = last_price * (1-2*prediction)

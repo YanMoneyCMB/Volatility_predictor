@@ -35,12 +35,12 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Confirm</ng-template>
-      <p>The prediction might take a while, please be patient.</p>
+      <p>You have selected to predict {{this.period}} days price volatility of the index with ticker {{this.index}}.</p>
+      <p>The prediction might take up to a minute, please be patient.</p>
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>
         <button mat-button (click)="redirect()">Confirm</button>
-        {{this.index}} {{this.period}}
       </div>
     </mat-step>
   </mat-stepper>
