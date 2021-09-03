@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from flask_restful import Resource, Api, reqparse
-from flask_sqlalchemy import SQLAlchemy
 from .dataGetter import getData, chartData,getOptions
 from .modelTrainer import trainer
 from .modelTuner import tune_regression,tune_direction
@@ -14,8 +13,10 @@ class Predict(Resource):
         to_predict = df.tail(1)
         dir_model, final_model = trainer(df,index,period)
         to_predict['Dir'] = dir_model.predict(to_predict.drop(columns=['date','hist_vol_5',
-                                                                       'hist_vol_14','hist_vol_28','Positive_lev','Negative_lev']))
-        vol = final_model.predict(to_predict[['return','hist_vol_5','hist_vol_14','hist_vol_28','Positive_lev','Negative_lev','Dir']])
+                                                                       'hist_vol_14','hist_vol_28',
+                                                                       'Positive_lev','Negative_lev']))
+        vol = final_model.predict(to_predict[['return','hist_vol_5','hist_vol_14','hist_vol_28','Positive_lev',
+                                              'Negative_lev','Dir']])
         print(vol)
         return jsonify(vol[0])
 
@@ -23,7 +24,9 @@ class Project(Resource):
     def get(self, index, period, prediction):
         data,minimum,maximum = chartData(yahoo_mapping[index],period,prediction)
 
-        return jsonify(data = data.values.tolist(),dates=data.index.strftime("%d-%m-%Y").values.tolist().append("+"+str(period)+" days"), minimum=minimum, maximum=maximum)
+        return jsonify(data = data.values.tolist(),
+                       dates=data.index.strftime("%d-%m-%Y").values.tolist().append("+"+str(period)+" days"),
+                       minimum=minimum, maximum=maximum)
 
 class Options(Resource):
 
@@ -33,9 +36,11 @@ class Options(Resource):
             return jsonify(resp = False)
         else:
             print("sending options over!!!!")
-            return jsonify(resp = "True", calls = options.calls.drop(columns=['contractSymbol', 'lastTradeDate','bid', 'ask', 'openInterest','percentChange','contractSize', 'currency','volume','change']).to_json(orient="records"),
-                           puts = options.puts.drop(columns=['contractSymbol', 'lastTradeDate','bid', 'ask', 'openInterest','contractSize','percentChange', 'currency','volume','change']).to_json(orient="records"),
-                           date = date, columns=options.puts.drop(columns=['contractSymbol', 'lastTradeDate','bid', 'ask', 'openInterest','percentChange','contractSize', 'currency','volume','change']).columns.values.tolist())
+            columns_drop =['contractSymbol', 'lastTradeDate','bid', 'ask', 'openInterest','percentChange',
+                           'contractSize', 'currency', 'volume','change']
+            return jsonify(resp = "True", calls = options.calls.drop(columns=columns_drop).to_json(orient="records"),
+                           puts = options.puts.drop(columns=columns_drop).to_json(orient="records"),
+                           date = date, columns=options.puts.drop(columns=columns_drop).columns.values.tolist())
 
 class Tune(Resource):
     def get(self):

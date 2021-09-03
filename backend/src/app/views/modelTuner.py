@@ -28,9 +28,6 @@ def tune_regression(data,ticker,period):
                  'min_samples_split': min_samples_split,
                  'min_samples_leaf': min_samples_leaf,
                  'bootstrap': bootstrap}
-
-
-
     data = data.reset_index().drop(columns=['Date']).dropna()
     pickle_off = open("./app/views/storage/RF_dir_hyperparameters.pkl", "rb")
     dir_hyperparameters = pickle.load(pickle_off)
@@ -48,7 +45,6 @@ def tune_regression(data,ticker,period):
                               'BolUpInd', 'BolDnInd', 'AroonUp', 'AroonDn', 'TRIX', 'Target',
                               'Target_vol', 'date'])
     y = data['Target_vol']
-
     tscv = TimeSeriesSplit(3)
     rf = RandomForestRegressor()
     rf_grid = RandomizedSearchCV(estimator=rf,
@@ -65,10 +61,6 @@ def tune_regression(data,ticker,period):
     mag_hyperparameters['reg_' + str(period) + '_' + ticker] = hyperparam
     with open('./app/views/storage/RF_mag_hyperparameters.pkl', 'wb') as handle:
         pickle.dump(dir_hyperparameters, handle)
-
-
-
-
 
 
 def reg_targets(data,period):
